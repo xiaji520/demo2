@@ -1,0 +1,36 @@
+{% extends 'common/parent.html' %}
+{% load static %}
+{% block title %}
+    About
+{% endblock %}
+
+{% block content %}
+    <body id="page">
+
+    <div class="content-body">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-12">
+                    <h1 class="page-title">About Me</h1>
+                    <article class="post">
+                        <div class="entry-content clearfix">
+                            <figure class="img-responsive-center">
+                                <img class="img-responsive" src="{% static 'img/me.jpg' %}" alt="Developer Image">
+                            </figure>
+                            <p >这里是xj的blog,技术不好,欢迎大家多多指教!</p>
+                            <div class="height-40px"></div>
+                            <h2 class="title text-center">Social</h2>
+                            <ul class="social">
+                                <li class="facebook"><a href="#"><span class="ion-social-facebook"></span></a></li>
+                                <li class="twitter"><a href="#"><span class="ion-social-twitter"></span></a></li>
+                                <li class="google-plus"><a href="#"><span class="ion-social-googleplus"></span></a></li>
+                            </ul>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

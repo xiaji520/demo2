@@ -1,0 +1,155 @@
+{% extends 'common/parent.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% load highlight %}
+    {% block head_css %}
+        <style>
+            .heightline {
+                color: #cb2527;
+            }
+        </style>
+    {% endblock %}
+{% block content %}
+    <div class="content-body">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8">
+
+                    {% for search in page %}
+                        <article class="post post-{{ search.object.pk }}">
+                            <header class="entry-header">
+                                <h1 class="entry-title">
+                                    <a href="{{ search.object.get_absolute_url }}">{% highlight search.object.title with query html_tag "i" css_class "heightline" %}</a>
+                                </h1>
+                                <div class="entry-meta">
+                                    <span class="post-category"><a href="#">{{ search.object.category.name }}</a></span>
+                                    <span class="post-date"><a href="#"><time class="entry-date"
+                                                                              datetime="{{ search.object.created_time }}">{{ search.object.created_time }}</time></a></span>
+                                    <span class="post-author"><a href="#">作者:{{ search.object.author }}</a></span>
+                                    <span class="comments-link"><a
+                                            href="{{ search.object.get_absolute_url }}">{{ search.object.comment_set.count }} 评论</a></span>
+                                    <span class="views-count"><a href="#">{{ search.object.views }}  阅读</a></span>
+                                </div>
+                            </header>
+                            <div class="entry-content clearfix">
+                                <p>{% highlight search.object.excerpt with query html_tag "i" css_class "heightline" %}</p>
+                                <div class="read-more cl-effect-14">
+                                    <a href="{{ search.object.get_absolute_url }}" class="more-link">继续阅读 <span
+                                            class="meta-nav">→</span></a>
+                                </div>
+                            </div>
+                        </article>
+
+                    {% empty %}
+                        <div class="no-post"><a href="{% url 'blog:首页' %}">没有搜到结果！返回主页?</a></div>
+                    {% endfor %}
+
+
+                    <!-- 简单分页效果
+                    <div class="pagination-simple">
+                        <a href="#">上一页</a>
+                        <span class="current">第 6 页 / 共 11 页</span>
+                        <a href="#">下一页</a>
+                    </div>
+                    -->
+
+                    <div class="pagination">
+                    <span class="step-links">
+                        <ul>
+                            {#     如果存在上一页才显示           #}
+                            {% if post_list.has_previous %}
+                                <a href="?page={{ post_list.previous_page_number }}">上一页</a>
+                            {% endif %}
+
+                            {#      循环展示页码          #}
+                            {% if post_list.paginator.count %}
+                                <span class="current">
+                                    {% for p in post_list.paginator.page_range %}
+                                        {% if p == post_list.number %}
+                                            {{ p }}
+                                        {% else %}
+                                            <a href="{% url 'blog:首页' %}?page={{ p }}">{{ p }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            {% endif %}
+                            {#     如果存在下一页才显示           #}
+                            {% if post_list.has_next %}
+                                <a href="?page={{ post_list.next_page_number }}">下一页</a>
+                            {% endif %}
+
+
+                        </ul>
+                     </span>
+                    </div>
+                </main>
+
+
+                <aside class="col-md-4">
+                    <div class="widget widget-recent-posts">
+                        <h3 class="widget-title">最新文章</h3>
+                        {% get_recent_posts as recent_post_list %}
+                        <ul>
+                            {% for post in recent_post_list %}
+                                <li>
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </li>
+                            {% empty %}
+                                暂无文章！
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-archives">
+                        <h3 class="widget-title">归档</h3>
+                        {% archives as date_list %}
+                        <ul>
+                            {% for date in date_list %}
+                                <li>
+                                    <a href="{% url 'blog:归档' date.year date.month %}">{{ date.year }}
+                                        年 {{ date.month }} 月</a>
+                                </li>
+                            {% empty %}
+                                暂无归档！
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-category">
+                        <h3 class="widget-title">分类</h3>
+                        {% get_categories as category_list %}
+                        <ul>
+                            {% for category in category_list %}
+                                <li>
+                                    <a href="{% url 'blog:分类' category.pk %}">{{ category.name }} <span
+                                            class="post-count">(12) </span></a>
+                                </li>
+                            {% empty %}
+                                暂无分类！
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-tag-cloud">
+                        <h3 class="widget-title">标签云</h3>
+                        {% get_tags as tag_list %}
+                        <ul>
+                            {% for tag in tag_list %}
+                                <li>
+                                    <a href="{% url 'blog:标签' tag.pk %}">{{ tag.name }}</a>
+                                </li>
+                            {% empty %}
+                                暂无标签！
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="rss">
+                        <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+{% endblock %}

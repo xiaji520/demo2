@@ -1,0 +1,74 @@
+{% extends 'common/parent.html' %}
+{% load static %}
+{% block title %}
+    Blog
+{% endblock %}
+
+{% block content %}
+
+    <div class="content-body">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-12">
+                   {% for post in post_list %}
+                        <article class="post post-{{ post.pk }}">
+                            <header class="entry-header">
+                                <h1 class="entry-title">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h1>
+                                <div class="entry-meta">
+                                    <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+                                    <span class="post-date"><a href="#"><time class="entry-date"
+                                                                              datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+                                    <span class="post-author"><a href="#">作者:{{ post.author }}</a></span>
+                                    <span class="comments-link"><a href="{{ post.get_absolute_url }}">{{ post.comment_set.count }} 评论</a></span>
+                                    <span class="views-count"><a href="#">{{ post.views }}  阅读</a></span>
+                                </div>
+                            </header>
+                            <div class="entry-content clearfix">
+                                <p>{{ post.excerpt }}</p>
+                                <div class="read-more cl-effect-14">
+                                    <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                                </div>
+                            </div>
+                        </article>
+
+                    {% empty %}
+                        <div class="no-post">暂时还没有发布的文章！</div>
+                    {% endfor %}
+
+                 <div class="pagination">
+                    <span class="step-links">
+                        <ul>
+                            {#     如果存在上一页才显示           #}
+                            {% if post_list.has_previous %}
+                                <a href="?page={{ post_list.previous_page_number }}">上一页</a>
+                            {% endif %}
+
+                            {#      循环展示页码          #}
+                            {% if post_list.paginator.count %}
+                               <span class="current">
+                                    {% for p in post_list.paginator.page_range %}
+                                        {% if p == post_list.number %}
+                                            {{ p }}
+                                        {% else %}
+                                            <a href="{% url 'blog:首页' %}?page={{ p }}">{{ p }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            {% endif %}
+                            {#     如果存在下一页才显示           #}
+                            {% if post_list.has_next %}
+                                <a href="?page={{ post_list.next_page_number }}">下一页</a>
+                            {% endif %}
+
+
+                        </ul>
+                     </span>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'common/parent.html' %}
+{% load static %}
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+
+    <form action="" method="post" class="comment-form">
+        {% csrf_token %}
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <main class="col-md-12">
+                        <h1 class="page-title">注册</h1>
+                        <article class="post">
+                            <div class="entry-content clearfix">
+
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <input type="text" id="nickname" name="nickname" placeholder="nickname"
+                                               required>
+                                        <p>{{ errors.nickname }}</p>
+                                        <input type="email" id="email" name="email" placeholder="email" required>
+                                        <p>{{ errors.email }}</p>
+                                        <input type="password" id="password" name="password" placeholder="password"
+                                               required>
+                                        <p>{{ errors.password }}</p>
+                                        <input type="password" id="repassword" name="repassword"
+                                               placeholder="repassword" required>
+                                        <p>{{ errors.repassword }}</p>
+
+                                        <button class="btn-send btn-5 btn-5b ion-ios-paperplane">
+                                            <span>注册</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
