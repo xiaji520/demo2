@@ -29,7 +29,9 @@
                                         <input type="password" id="repassword" name="repassword"
                                                placeholder="repassword" required>
                                         <p>{{ errors.repassword }}</p>
-
+                                        <i>验证码:</i>
+                                        {{ form.captcha }}
+                                        {{ errors.captcha}}
                                         <button class="btn-send btn-5 btn-5b ion-ios-paperplane">
                                             <span>注册</span></button>
                                     </div>

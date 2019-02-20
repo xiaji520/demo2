@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<form action="" method="post" class="comment-form">
+    <form action="" method="post" class="comment-form">
         {% csrf_token %}
         <div class="content-body">
             <div class="container">
@@ -23,6 +23,9 @@
                                         <input type="password" id="password" name="password" placeholder="password"
                                                required>
                                         <p>{{ errors.password }}</p>
+                                        <i>验证码:</i>
+                                        {{ form.captcha }}
+                                        {{ errors.captcha}}
                                         <button class="btn-send btn-5 btn-5b ion-ios-paperplane">
                                             <span>登录</span></button>
                                     </div>

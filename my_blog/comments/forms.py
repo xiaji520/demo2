@@ -1,3 +1,4 @@
+from captcha.fields import CaptchaField
 from django import forms
 from comments.helper import set_password
 from comments.models import Users, Comment
@@ -7,7 +8,7 @@ from comments.models import Users, Comment
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = [ 'text']
+        fields = ['text']
 
 
 # 注册
@@ -37,6 +38,9 @@ class RegisterForm(forms.Form):
                                      'min_length': '请输入至少六个字符!',
                                      'max_length': '请输入小于或等于二十个字符!'
                                  })
+    # invalid 表示出错时候的显示信息.
+    captcha = CaptchaField()
+
 
     def clean(self):
         pwd = self.cleaned_data.get("password")  # 密码
@@ -67,6 +71,8 @@ class LoginForm(forms.Form):
                                    'min_length': '请输入至少六个字符!',
                                    'max_length': '请输入小于或等于二十个字符!'
                                })
+    # invalid 表示出错时候的显示信息.
+    captcha = CaptchaField()
 
     def clean(self):
         # 验证用户名

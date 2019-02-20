@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'comments.apps.CommentsConfig',  # 注册 comments 子应用
     'ckeditor',  # 添加ckeditor富文本编辑器
     'ckeditor_uploader',  # 添加ckeditor富文本编辑器文件上传部件
+    'captcha',  # 验证码
 
 ]
 

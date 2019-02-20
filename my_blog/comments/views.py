@@ -15,8 +15,11 @@ class RegisterView(View):
     '''
 
     def get(self, request):
-
-        return render(request, 'comments/register.html')
+        form = LoginForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'comments/register.html',context=context)
 
     def post(self, request):
         # 完成用户信息的注册
@@ -46,6 +49,7 @@ class RegisterView(View):
             # 错误
             context = {
                 'errors': form.errors,
+                'form':form,
             }
             return render(request, 'comments/register.html', context=context)
 
@@ -56,7 +60,11 @@ class LogintView(View):
     '''
 
     def get(self, request):
-        return render(request, 'comments/login.html')
+        form = LoginForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'comments/login.html', context=context)
 
     def post(self, request):
         # 接收参数
@@ -94,6 +102,7 @@ class LogintView(View):
         else:  # 不合法
             context = {
                 'errors': form.errors,
+                'form': form,
             }
             return render(request, "comments/login.html", context=context)
 
@@ -129,8 +138,7 @@ class Post_commentView(VerifyLoginView):
             # 取出清洗后的评论
             text = cleaned.get('text')
             # 保存到数据库
-            Comment.objects.create(text=text,post_id=post_pk,users_id=user_id)
-            return render(request,'blog/full-width.html')
+            Comment.objects.create(text=text, post_id=post_pk, users_id=user_id)
+            return render(request, 'blog/full-width.html')
         else:
             return render(request, 'blog/full-width.html')
-

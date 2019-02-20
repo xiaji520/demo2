@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^captcha/', include('captcha.urls')),  # 这是生成验证码的图片
     url(r'^admin/', admin.site.urls),
     # 第三方插件
     url(r'^ckeditor/', include("ckeditor_uploader.urls")),
